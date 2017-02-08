@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -15,6 +16,12 @@ namespace Z_Market
     {
         protected void Application_Start()
         {
+            //esta linea de codigo permite verificar si hay cambio en el modelo para hacer
+            //la migracion clase 08
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<
+                Models.Z_MarketContext,
+                Migrations.Configuration>());//se pasan dos colecciones, uno donde esta el model
+            //dos donde esta el archivo de migracion
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
