@@ -12,5 +12,6 @@ namespace Z_Market.Models
         public DateTime LastBuy { get; set; }
         public float Stock { get; set; }
         public string Remarks { get; set; }
+        public string borrame { get; set; }
     }
 }

@@ -18,10 +18,11 @@ namespace Z_Market
         {
             //esta linea de codigo permite verificar si hay cambio en el modelo para hacer
             //la migracion clase 08
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<
-                Models.Z_MarketContext,
+            Database.SetInitializer(
+                new MigrateDatabaseToLatestVersion<Models.Z_MarketContext,
                 Migrations.Configuration>());//se pasan dos colecciones, uno donde esta el model
             //dos donde esta el archivo de migracion
+            //CON ESTE CAMBIO CADA VEZ QUE ADICIONE O QUITE CAMPO EL SISTEMA VA A FUNCIONAR
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
