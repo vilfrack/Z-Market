@@ -14,7 +14,9 @@ namespace Z_Market.Models
 
         [Display(Name = "Document")]
         public string Descripcion { get; set; }
-        //el tipo de documento maneja una relacion de 1:n con la clase employee
+
+        //el tipo de documento maneja una relacion de 1:n
         public ICollection<Employee> Employee { get; set; }
+        public ICollection<Customer> Customer { get; set; }
     }
 }

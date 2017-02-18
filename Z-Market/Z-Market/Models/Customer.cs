@@ -6,25 +6,20 @@ using System.Web;
 
 namespace Z_Market.Models
 {
-    public class Supplier
+    public class Customer
     {
         [Key]
-        public int SupplierID { get; set; }
-
-        [StringLength(30,ErrorMessage ="The fiel {0} must contain between {2} and {1} characters", MinimumLength =3)]
-        [Required(ErrorMessage ="You must enter the field {0}")]
-        [Display(Name ="Suplier Name")]
-        public string Name { get; set; }
+        public int CustomerID { get; set; }
 
         [StringLength(30, ErrorMessage = "The fiel {0} must contain between {2} and {1} characters", MinimumLength = 3)]
         [Required(ErrorMessage = "You must enter the field {0}")]
-        [Display(Name = "Contact Firts Name")]
-        public string ContactFirtsName { get; set; }
+        [Display(Name = "Firts Name")]
+        public string FirtsName { get; set; }
 
         [StringLength(30, ErrorMessage = "The fiel {0} must contain between {2} and {1} characters", MinimumLength = 3)]
         [Required(ErrorMessage = "You must enter the field {0}")]
-        [Display(Name = "Contact Last Name")]
-        public string ContactLastName { get; set; }
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
 
         [DataType(DataType.PhoneNumber)]
         [StringLength(30, ErrorMessage = "The fiel {0} must contain between {2} and {1} characters", MinimumLength = 3)]
@@ -39,8 +34,13 @@ namespace Z_Market.Models
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
-        //SE DEFINE LA RELACION DE MUCHOS A MUCHOS
-        public virtual ICollection<SupplierProducts> SupplierProducts { get; set; }
-        public virtual ICollection<Product> Product { get; set; }
+        [StringLength(30, ErrorMessage = "The fiel {0} must contain between {2} and {1} characters", MinimumLength = 3)]
+        [Required(ErrorMessage = "You must enter the field {0}")]
+        [Display(Name = "Document")]
+        public string Document { get; set; }
+
+        public int DocumentTypeID { get; set; }
+
+        public virtual DocumentType DocumentType { get; set; }
     }
 }
