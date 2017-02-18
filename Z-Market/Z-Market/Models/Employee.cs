@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Z_Market.Models
 {
@@ -11,6 +9,7 @@ namespace Z_Market.Models
         [Key]
         public int EmployeeID { get; set; }
 
+        //[Column("Name")]//sirve para cambiar los nombre de los campos
         //Display permite visualizar el campo en la vista, si se quita el firts name saldra pegado
         [Display(Name ="Firts Name")]
         [Required(ErrorMessage ="You must enter {0}")]//el {0} copia el nombre del campo
@@ -54,6 +53,9 @@ namespace Z_Market.Models
         [Required(ErrorMessage = "You must enter {0}")]
         public int DocumentTypeID { get; set; }
 
+        [NotMapped]//NotMapped permite que el campo no se cree en la tabla
+        public int Age { get { return DateTime.Now.Year - DateOfBirth.Year; } }//propiedades de lectura
+       
         //virtual significa que esta realacionada con la otra tabla DocumentType
         public virtual DocumentType DocumentType { get; set; }
     }
