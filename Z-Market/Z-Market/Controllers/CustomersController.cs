@@ -39,8 +39,13 @@ namespace Z_Market.Controllers
         // GET: Customers/Create
         public ActionResult Create()
         {
-            //se agrega la sentencia linq para ordenar el combo
-            ViewBag.DocumentTypeID = new SelectList(db.DocumentTypes.OrderBy(c=>c.Descripcion), "DocumentTypeID", "Descripcion");
+            //creo una variable donde va a obtener todos los DocumentTypes
+            var list = db.DocumentTypes.ToList();
+            //se agrega el nuevo campo que es Seleccione un tipo de documento
+            list.Add(new DocumentType { DocumentTypeID = 0, Descripcion = "Seleccione un tipo de documento" });
+            //se ordena la lista
+            list = list.OrderBy(c => c.DocumentTypeID).ToList();
+            ViewBag.DocumentTypeID = new SelectList(list, "DocumentTypeID", "Descripcion");
             return View();
         }
 

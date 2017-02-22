@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
-
+using System.Collections.Generic;
 namespace Z_Market.Models
 {
     public class Product
@@ -29,5 +30,8 @@ namespace Z_Market.Models
 
         [DataType(DataType.MultilineText)]
         public string Remarks { get; set; }
+
+        public virtual ICollection<SupplierProducts> SupplierProducts { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

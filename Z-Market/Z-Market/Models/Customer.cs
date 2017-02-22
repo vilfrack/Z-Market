@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -40,7 +41,17 @@ namespace Z_Market.Models
         public string Document { get; set; }
 
         public int DocumentTypeID { get; set; }
+        public string _FullName;
+        [NotMapped]
+        public string FullName {
+            get {
+                _FullName = string.Format("{0} {1}", FirtsName, LastName);
+                return _FullName;
+            }
+            set { _FullName = value; }
+        }
 
         public virtual DocumentType DocumentType { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }
