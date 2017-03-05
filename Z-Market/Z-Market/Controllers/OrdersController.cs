@@ -17,7 +17,7 @@ namespace Z_Market.Controllers
             var orderView = new OrderView();
             orderView.Customer = new Customer();
             orderView.Products = new List<ProductOrder>();
-
+            Session["orderView"] = orderView;
             FullName();
             return View(orderView);
         }
@@ -27,8 +27,49 @@ namespace Z_Market.Controllers
             FullName();
             return View(OrderView);
         }
-        public ActionResult AddProduct(ProductOrder productOrder) {
-            return View(productOrder);
+        public ActionResult AddProduct() {
+            var list = db.Products.ToList();
+            list.Add(new Product { ProductID = 0, Description = "[Seleccione]" });
+            list = list.OrderBy(c => c.Description).ToList();
+            ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddProduct(ProductOrder productOrder)
+        {
+            //FORMCOLLECTION TRAE TODO LO DEL FORMULARIO
+            //hace  que la variable de session traiga un objeto de tipo OrderView 
+            var orderView = Session["orderView"] as OrderView;
+            //Request TRAE LA INFORMACION DIGITADA EN UN CONTROL DE LA VISTA
+            var productID =int.Parse(Request["ProductID"]);
+            if (productID==0)
+            {
+                var list = db.Products.ToList();
+                list.Add(new Product { ProductID = 0, Description = "[Seleccione]" });
+                list = list.OrderBy(c => c.Description).ToList();
+                ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
+                ViewBag.Error = "Debe seleccionar un producto";
+                return View(productOrder);
+            }
+            var product = db.Products.Find(productID);
+            if (product == null)
+            {
+                var list = db.Products.ToList();
+                list.Add(new Product { ProductID = 0, Description = "[Seleccione]" });
+                list = list.OrderBy(c => c.Description).ToList();
+                ViewBag.ProductID = new SelectList(list, "ProductID", "Description");
+                ViewBag.Error = "El producto no existe";
+                return View(productOrder);
+            }
+            productOrder = new ProductOrder
+            {
+                Description = product.Description,
+                Price = product.Price,
+                Quantity =float.Parse(Request["Quantity"]),
+                ProductID = product.ProductID,
+            };
+            orderView.Products.Add(productOrder);
+            return View("NewOrder",orderView);
         }
         private void FullName() {
             //creo una variable donde va a obtener todos los DocumentTypes

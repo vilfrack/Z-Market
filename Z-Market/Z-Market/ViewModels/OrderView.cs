@@ -11,6 +11,7 @@ namespace Z_Market.ViewModels
         //PROPIEDADES QUE EL USUARIO VA A VER
         //estas vistas son personalizadas
         public Customer Customer { get; set; }
+        public ProductOrder ProductOrder { get; set; }
         public List<ProductOrder> Products { get; set; }
     }
 }
