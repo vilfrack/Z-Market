@@ -46,32 +46,52 @@ namespace Z_Market.Controllers
                 ViewBag.Error = "Debe ingresar detalle";
                 return View(orderView);
             }
-            var order = new Order
+
+            int orderID = 0;
+            //para hacer transaccciones
+            using (var transaction = db.Database.BeginTransaction())
             {
-                CustomerID = customerID,
-                DateOrder = DateTime.Now,
-                OrderSatus = OrderSatus.Created
-            };
-            db.Orders.Add(order);
-            db.SaveChanges();
-            //SELECT DEL MAXIMO
-            var orderID = db.Orders.ToList().Select(o => o.OrderID).Max();
-            foreach (var item in orderView.Products)
-            {
-                var orderDetail = new OrderDetail
+                //LA TRANSCCION LO QUE HACE ES QUE AL MOMENTO DE FALLAR
+                //EL CODIGO A MITAD DE CAMINO, NO SE GUARDEN LOS REGISTROS
+                try
                 {
-                    ProductID = item.ProductID,
-                    Description = item.Description,
-                    Price = item.Price,
-                    Quantity = item.Quantity,
-                    OrderID = orderID,
-                };
-                //el add guarda en memoria
-                db.OrderDetails.Add(orderDetail);
-                //guarda en base de datos
-                db.SaveChanges();
+                    var order = new Order
+                    {
+                        CustomerID = customerID,
+                        DateOrder = DateTime.Now,
+                        OrderSatus = OrderSatus.Created
+                    };
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+                    //SELECT DEL MAXIMO
+                    orderID = db.Orders.ToList().Select(o => o.OrderID).Max();
+                    foreach (var item in orderView.Products)
+                    {
+                        var orderDetail = new OrderDetail
+                        {
+                            ProductID = item.ProductID,
+                            Description = item.Description,
+                            Price = item.Price,
+                            Quantity = item.Quantity,
+                            OrderID = orderID,
+                        };
+                        //el add guarda en memoria
+                        db.OrderDetails.Add(orderDetail);
+                        //guarda en base de datos
+                        db.SaveChanges();
+                    }
+                    //SE CONFIRMA LA TRANSACCION
+                    transaction.Commit();
+                }
+                catch (Exception e)
+                {
+                    //CUANDO DA ERROR NO SALVA LA TRANSACCION
+                    transaction.Rollback();
+                    ViewBag.Error = "ERROR:" + e.Message;
+                    return View(orderView);
+                }
+                
             }
-          
             ViewBag.Message = string.Format("La orden: {0}, grabada ok", orderID);
             return RedirectToAction("NewOrder");
         }
