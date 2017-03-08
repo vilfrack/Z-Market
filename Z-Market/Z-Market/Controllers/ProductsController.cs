@@ -10,18 +10,20 @@ using Z_Market.Models;
 
 namespace Z_Market.Controllers
 {
-    [Authorize]
+    [Authorize(Users ="juanthebikerboyz@hotmail.com")]
     public class ProductsController : Controller
     {
         private Z_MarketContext db = new Z_MarketContext();
 
         // GET: Products
+        [AllowAnonymous]//permite a los anonimo ver el control
         public ActionResult Index()
         {
             return View(db.Products.ToList());
         }
 
         // GET: Products/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
