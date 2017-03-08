@@ -10,6 +10,7 @@ using Z_Market.Models;
 
 namespace Z_Market.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private Z_MarketContext db = new Z_MarketContext();

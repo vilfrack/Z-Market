@@ -54,9 +54,9 @@ namespace Z_Market
             //   consumerKey: "",
             //   consumerSecret: "");
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            app.UseFacebookAuthentication(
+               appId: "2060395340853728",
+               appSecret: "17e3304c08aa3fee739fffb0e4c9eb61");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
