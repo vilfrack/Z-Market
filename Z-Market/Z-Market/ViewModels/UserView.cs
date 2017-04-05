@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using Z_Market.ViewModels;
 
-namespace Z_Market.Models
+namespace Z_Market.ViewModels
 {
     public class UserView
     {
@@ -15,9 +15,6 @@ namespace Z_Market.Models
 
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
-
-        //sirve para pintar los roles en la vista
-        public RolView Role { get; set; }
 
         public List<RolView> Roles { get; set; }
     }
