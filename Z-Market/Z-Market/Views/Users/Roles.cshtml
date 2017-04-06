@@ -7,7 +7,7 @@
 
 <p>
     @* SE PASAN TODO EL USER DEL MODEL A ADDROLE *@
-    @Html.ActionLink("Add Role", "AddRole", new { user = Model }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Add Role", "AddRole", new { userID = Model.UserID }, new { @class = "btn btn-primary" })
     @Html.ActionLink("Back to list", "Index",new { }, new { @class = "btn btn-info" })
 </p>
 <table class="table">

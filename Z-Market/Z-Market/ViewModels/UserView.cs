@@ -16,6 +16,7 @@ namespace Z_Market.ViewModels
         [DataType(DataType.EmailAddress)]
         public string Email { get; set; }
 
+        public RolView Role { get; set; }
         public List<RolView> Roles { get; set; }
     }
 }

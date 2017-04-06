@@ -159,7 +159,7 @@ namespace Z_Market.Controllers
             list.Add(new Customer { CustomerID = 0, FullName = "Seleccione un cliente" });
             //se ordena la lista
             list = list.OrderBy(c => c.FullName).ToList();
-            ViewBag.CustomerID = new SelectList(list, "CustomerID", "FullName");
+            ViewBag.RoleID = new SelectList(list, "CustomerID", "FullName");
 
         }
         protected override void Dispose(bool disposing)
