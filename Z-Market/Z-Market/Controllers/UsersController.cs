@@ -51,6 +51,7 @@ namespace Z_Market.Controllers
                 };
                 rolesView.Add(roleView);
             }
+
             var userView = new UserView
             {
                 Email = user.Email,

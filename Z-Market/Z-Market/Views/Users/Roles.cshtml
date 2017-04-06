@@ -3,5 +3,29 @@
     ViewBag.Title = "Roles";
 }
 
-<h2>Roles</h2>
+<h2>Roles for user: @Model.Name</h2>
+
+<p>
+    @* SE PASAN TODO EL USER DEL MODEL A ADDROLE *@
+    @Html.ActionLink("Add Role", "AddRole", new { user = Model }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to list", "Index",new { }, new { @class = "btn btn-info" })
+</p>
+<table class="table">
+    @*  EL FOR SE USA CUANDO SE NECESITA RECORRER UN OBJETO PERO SIN USAR UNA LISTA*@
+    @for (int i = 0; i < Model.Roles.Count; i++)
+    {
+        <tr>
+            <td>
+                @* SE DEBE COLOCAR LA UBICACION USANDO EL PARAMETRO I DEL FOR *@
+                @Html.DisplayFor(modelItem => Model.Roles[i].Name)
+            </td>
+
+            <td>
+                @* SE LE PASAN DOS PARAMETROS EL USER Y EL IDROL *@
+                @Html.ActionLink("Delete", "Delete", new { user = Model, roleID = Model.Roles[i].RoleID })
+            </td>
+        </tr>
+    }
+
+</table>
 
