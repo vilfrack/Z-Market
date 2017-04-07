@@ -95,6 +95,62 @@ namespace Z_Market.Controllers
             DropDown();
             return View(userView);
         }
+        [HttpPost]
+        public ActionResult AddRole(string userID,FormCollection form)
+        {
+            var roleID = Request["RoleID"];
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            var users = UserManager.Users.ToList();
+            var user = users.Find(u => u.Id == userID);
+            if (user == null)
+            {
+                return HttpNotFound();
+            }
+            var userView = new UserView
+            {
+                Email = user.Email,
+                Name = user.UserName,
+                UserID = user.Id
+            };
+            if (string.IsNullOrEmpty(roleID))
+            {
+                ViewBag.Error = "Error";
+                DropDown();
+                return View();
+            }
+            var roles = roleManager.Roles.ToList();
+            var role = roles.Find(r => r.Id == roleID);
+            if (!UserManager.IsInRole(userID, role.Name))
+            {
+                UserManager.AddToRole(userID, role.Name);
+            }
+
+            var rolesView = new List<RolView>();
+            foreach (var item in user.Roles)
+            {
+                role = roles.Find(r => r.Id == item.RoleId);
+
+                var roleView = new RolView
+                {
+                    RoleID = role.Id,
+                    Name = role.Name
+                };
+                rolesView.Add(roleView);
+            }
+
+             userView = new UserView
+            {
+                Email = user.Email,
+                Name = user.UserName,
+                UserID = user.Id,
+                Roles = rolesView
+            };
+
+
+
+            return View("Roles", userView);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
